@@ -1,0 +1,62 @@
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
+public class DoorSceneLoader_ListenToPlayer : MonoBehaviour
+{
+    [Header("Scene")]
+    [SerializeField] private string sceneToLoad;
+
+    [Header("Input Action Name")]
+    [SerializeField] private string interactActionName = "Interact"; // must match your action name
+
+    private InputAction interactAction;   // the player's action instance
+    private PlayerInput currentPlayerInput;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Player must have PlayerInput component
+        var playerInput = other.GetComponentInParent<PlayerInput>();
+        if (playerInput == null) return;
+
+        currentPlayerInput = playerInput;
+
+        // Get the Interact action from the player's actions
+        interactAction = currentPlayerInput.actions[interactActionName];
+        if (interactAction == null)
+        {
+            Debug.LogWarning($"Door: Could not find action '{interactActionName}' on PlayerInput.");
+            return;
+        }
+
+        // Subscribe while in range
+        interactAction.performed += OnInteract;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var playerInput = other.GetComponentInParent<PlayerInput>();
+        if (playerInput == null) return;
+
+        // Only unsubscribe from the same player we subscribed to
+        if (playerInput == currentPlayerInput && interactAction != null)
+        {
+            interactAction.performed -= OnInteract;
+            interactAction = null;
+            currentPlayerInput = null;
+        }
+    }
+
+    private void OnDisable()
+    {
+        // Safety: if door gets disabled while player is in trigger
+        if (interactAction != null)
+            interactAction.performed -= OnInteract;
+    }
+
+    private void OnInteract(InputAction.CallbackContext ctx)
+    {
+        if (string.IsNullOrEmpty(sceneToLoad)) return;
+        SceneManager.LoadScene(sceneToLoad);
+    }
+}
