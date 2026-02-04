@@ -10,7 +10,10 @@ public class EscapeToCorridor : MonoBehaviour
     private void OnEnable()
     {
         backAction.action.Enable();
-    }
+        Cursor.lockState = CursorLockMode.None;
+    Cursor.visible = true;
+ 
+}
 
     private void Update()
     {
