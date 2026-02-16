@@ -276,7 +276,8 @@ MonoBehaviour:
   dialogueUI: {fileID: 650524678}
   thinkingLine: "LLM: \u2026thinking"
   replyPrefix: 'LLM: '
-  fakeDelaySeconds: 1
+  apiKey: AIzaSyB06YDuv0f0a78siCX1RUNd9J_uPDD89_4
+  modelName: gemini-2.5-flash
 --- !u!4 &106694850
 Transform:
   m_ObjectHideFlags: 0
@@ -684,6 +685,7 @@ GameObject:
   - component: {fileID: 364465109}
   - component: {fileID: 364465111}
   - component: {fileID: 364465110}
+  - component: {fileID: 364465112}
   m_Layer: 5
   m_Name: Dialogue Text
   m_TagString: Untagged
@@ -810,6 +812,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 364465108}
   m_CullTransparentMesh: 1
+--- !u!114 &364465112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 364465108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b34e612befdf440db94ba36a09852d4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  charactersPerSecond: 30
 --- !u!1 &450753637
 GameObject:
   m_ObjectHideFlags: 0

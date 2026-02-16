@@ -100,6 +100,16 @@ public class DialogueAutoScrollFixed : MonoBehaviour
         KickScroll(shouldStick);
     }
 
+    /// <summary>
+    /// Call this when external code mutates the dialogue text directly.
+    /// It will decide whether to stick and perform the scroll/layout refresh.
+    /// </summary>
+    public void NudgeAfterExternalChange()
+    {
+        EnsureWired();
+        KickScroll(ShouldStickToBottom());
+    }
+
     private void EnsureWired()
     {
         if (scrollRect == null || viewport == null || content == null || dialogueText == null)
